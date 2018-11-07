@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package calculator;
+option go_package="calculatorpb";
+
+message Digits {
+    int32 first_num = 1;
+    int32 second_num = 2;
+}
+
+message SumRequest {
+    Digits digits = 1;
+}
+
+message SumResponse {
+    int32 result = 1;
+}
+
+message primeNumberRequest {
+    int32 primeNumber = 1;
+}
+
+message primeNumberResponse {
+    int32 result = 1;
+}
+
+message computeAverageRequest {
+    double number = 1;
+}
+
+message computeAverageResponse {
+    double number = 1;
+}
+
+message findMaximumRequest{
+    int32 number = 1;
+}
+
+message findMaximumResponse{
+    int32 number = 1;
+}
+
+message SquareRootRequest{
+    int32 number = 1;
+}
+
+message SquareRootReponse{
+    double number_root = 1;
+}
+
+service CalculatorService{
+    rpc Sum(SumRequest) returns (SumResponse) {};
+
+    rpc PrimeNumberDecomposition(primeNumberRequest) returns (stream primeNumberResponse) {};
+
+    rpc ComputeAverage(stream computeAverageRequest) returns (computeAverageResponse){};
+
+    rpc FindMaximum(stream findMaximumRequest) returns (stream findMaximumResponse){};
+
+    //The RPC will throw an exception if the sent number is negative
+    //The error being sent is of type INVALID_ARGUMENT
+    rpc SquareRoot(SquareRootRequest) returns (SquareRootReponse) {}
+}
